@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101b3d">
+<title>ALGAIDA NAG WORK</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--bg:#f3f6fc;--panel:#fff;--text:#17233c;--muted:#68758d;--line:#e3e9f3;--navy:#101b3d;--blue:#2563eb;--gold:#f5bd36;--green:#0f9d68;--red:#d9485f;--shadow:0 8px 24px rgba(18,35,72,.08)}
+[data-theme="dark"]{--bg:#0b1224;--panel:#131f38;--text:#edf3ff;--muted:#9eacc5;--line:#293957;--navy:#080f20;--blue:#4d8bff;--gold:#f6c453;--green:#27c58b;--red:#ff7185;--shadow:0 8px 24px rgba(0,0,0,.22)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+header{background:linear-gradient(120deg,#101b3d,#1d3e83);color:#fff;padding:18px 16px 16px;position:sticky;top:0;z-index:5;box-shadow:0 4px 18px #07122c33}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:900;letter-spacing:.3px;font-size:18px}.brand span{color:#ffd15b}.subbrand{font-size:11px;color:#d8e4ff;margin-top:2px}.header-actions{display:flex;gap:8px}.iconbtn{border:1px solid #ffffff38;background:#ffffff14;color:white;border-radius:12px;padding:9px 11px}
+main{max-width:850px;margin:auto;padding:14px 14px 90px}.welcome{display:flex;align-items:center;gap:12px;margin:14px 0}.avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;background:#dbeafe;border:3px solid var(--gold)}.welcome h2{font-size:18px;margin:0}.muted{color:var(--muted);font-size:12px}
+.search{display:flex;gap:8px;margin:14px 0}.search input{flex:1}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel);color:var(--text);outline:none;min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb20}
+button.primary{background:linear-gradient(120deg,#2563eb,#1746a2);color:white;border:0;border-radius:12px;padding:12px 16px;font-weight:750}
+button.gold{background:var(--gold);color:#1b2740;border:0;border-radius:12px;padding:12px 16px;font-weight:800}
+button.ghost{background:transparent;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px 13px}
+button.danger{background:#d9485f;color:white;border:0;border-radius:12px;padding:10px 13px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;box-shadow:var(--shadow);margin:12px 0}
+.stat{min-height:100px}.stat .label{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:23px;margin-top:7px}.stat small{color:var(--muted)}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:20px 2px 8px}.section-title h3{font-size:16px;margin:0}
+.actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.action{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:13px 6px;text-align:center;color:var(--text);font-weight:700;font-size:12px}.action b{display:block;font-size:23px;margin-bottom:4px}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.field{margin:9px 0}.field label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin:0 0 5px}
+.full{grid-column:1/-1}.result{background:color-mix(in srgb,var(--green) 12%,var(--panel));border:1px solid color-mix(in srgb,var(--green) 40%,var(--line));border-radius:13px;padding:12px;margin-top:10px}
+.result strong{font-size:20px;color:var(--green)}.pill{display:inline-block;border-radius:99px;padding:4px 9px;background:#16a36a1c;color:var(--green);font-size:11px;font-weight:800}
+.invoice{border:1px solid var(--line);border-radius:13px;padding:12px;margin:8px 0;background:var(--panel)}.invoice-head{display:flex;justify-content:space-between;gap:10px;font-weight:800}.invoice p{margin:5px 0;color:var(--muted);font-size:12px}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:6}.tabs button{border:0;background:transparent;color:var(--muted);font-size:11px;font-weight:700;padding:5px 8px}.tabs button.active{color:var(--blue)}.tabs b{display:block;font-size:20px}
+.auth{max-width:420px;margin:10vh auto;padding:18px}.auth .card{padding:22px}.auth h1{font-size:23px;margin:0 0 4px}.note{font-size:11px;color:var(--muted);line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;padding:8px 4px;border-bottom:1px solid var(--line)}th{color:var(--muted)}
+.toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%);background:#14264b;color:#fff;padding:10px 15px;border-radius:99px;z-index:10;box-shadow:var(--shadow);font-size:13px}
+@media(min-width:700px){main{padding-top:22px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.actions{grid-template-columns:repeat(6,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<section id="authScreen" class="auth">
+ <div class="card">
+  <div class="brand" style="color:var(--text)">ALGAIDA <span style="color:#d89d12">NAG WORK</span></div>
+  <div class="muted" style="margin:4px 0 18px">Business Invoice & Calculation App</div>
+  <h1 id="authTitle">Welcome Back</h1><p class="muted" id="authDesc">Login to your account</p>
+  <div class="field"><label>User ID</label><input id="authUser" autocomplete="username" placeholder="Enter user ID"></div>
+  <div class="field"><label>Password</label><input id="authPass" type="password" autocomplete="current-password" placeholder="Enter password"></div>
+  <button class="primary" style="width:100%;margin-top:8px" id="authSubmit">Login</button>
+  <button class="ghost" style="width:100%;margin-top:8px" id="authSwitch">Create new account</button>
+  <p class="note" style="margin-top:14px">This starter app saves account data on this device only. Use a secure hosted backend before storing important business records.</p>
+ </div>
+</section>
+
+<div id="app" class="hidden">
+<header>
+ <div class="top"><div><div class="brand">ALGAIDA <span>NAG WORK</span></div><div class="subbrand">MOHAMMD AFSAR · BUSINESS MANAGER</div></div>
+ <div class="header-actions"><button class="iconbtn" id="themeBtn" aria-label="Toggle dark mode">☾</button><button class="iconbtn" id="logoutBtn">Logout</button></div></div>
+</header>
+<main>
+<section id="dashboardPage">
+ <div class="welcome"><img id="dashAvatar" class="avatar" alt="Profile"><div><h2 id="dashName">Mohammd Afsar</h2><div class="muted">Your business overview</div></div></div>
+ <div class="search"><input id="globalSearch" placeholder="Search bill number, model number or customer..."><button class="primary" id="searchBtn">Search</button></div>
+ <div class="grid">
+  <div class="card stat"><div class="label">Total Bills</div><strong id="statBills">0</strong><small>Saved invoices</small></div>
+  <div class="card stat"><div class="label">Booking Amount</div><strong id="statBooking">0.00 AED</strong><small>Total advance</small></div>
+  <div class="card stat"><div class="label">Work Amount</div><strong id="statWork">0.00 AED</strong><small>Total work value</small></div>
+  <div class="card stat"><div class="label">Material Amount</div><strong id="statMaterial">0.00 AED</strong><small>Nag + Crystal + BN</small></div>
+ </div>
+ <div class="section-title"><h3>Quick Actions</h3></div>
+ <div class="actions">
+  <button class="action" data-page="invoicePage"><b>＋</b>New Bill</button>
+  <button class="action" data-page="invoicePage"><b>⌕</b>Search Bills</button>
+  <button class="action" data-page="livePage"><b>∑</b>Live Calc</button>
+  <button class="action" data-page="ratioPage"><b>⚖</b>Ratio Calc</button>
+  <button class="action" data-page="profilePage"><b>●</b>My Profile</button>
+  <button class="action" data-page="reportsPage"><b>▥</b>Reports</button>
+ </div>
+ <div class="section-title"><h3>Recent Bills</h3><button class="ghost" data-page="invoicePage">View All</button></div>
+ <div id="recentBills"></div>
+</section>
+
+<section id="invoicePage" class="hidden">
+ <div class="section-title"><h3>New Bill / Invoice</h3><button class="ghost" id="newBillBtn">Clear</button></div>
+ <div class="card">
+  <div class="row">
+   <div class="field"><label>Bill Number</label><input id="billNo" placeholder="INV-0001"></div>
+   <div class="field"><label>Model Number</label><input id="modelNo" placeholder="Model number"></div>
+   <div class="field"><label>Customer Name</label><input id="customer" placeholder="Customer name"></div>
+   <div class="field"><label>Date</label><input id="billDate" type="date"></div>
+  </div>
+  <div class="section-title"><h3>Material Quantity</h3><span class="pill">Live AED calculation</span></div>
+  <div class="row">
+   <div class="field"><label>Nag Quantity (1440 = 17 AED)</label><input id="nagQty" type="number" min="0" step="any" value="0"></div>
+   <div class="field"><label>Crystal Quantity (200 = 10 AED)</label><input id="crystalQty" type="number" min="0" step="any" value="0"></div>
+   <div class="field"><label>BN Quantity (200 = 10 AED)</label><input id="bnQty" type="number" min="0" step="any" value="0"></div>
+   <div class="field"><label>Booking Amount (AED)</label><input id="booking" type="number" min="0" step="0.01" value="0"></div>
+   <div class="field"><label>Work Amount (AED)</label><input id="work" type="number" min="0" step="0.01" value="0"></div>
+   <div class="field"><label>Notes</label><input id="notes" placeholder="Optional notes"></div>
+  </div>
+  <div class="result">
+   <table><tr><td>Nag Amount</td><td id="nagAmt">0.00 AED</td></tr><tr><td>Crystal Amount</td><td id="crystalAmt">0.00 AED</td></tr><tr><td>BN Amount</td><td id="bnAmt">0.00 AED</td></tr><tr><th>Material Total</th><th id="materialAmt">0.00 AED</th></tr><tr><td>Work Amount</td><td id="workAmt2">0.00 AED</td></tr><tr><td>Booking Received</td><td id="bookingAmt2">0.00 AED</td></tr><tr><th>Balance Due (Work + Material − Booking)</th><th id="balanceAmt">0.00 AED</th></tr></table>
+  </div>
+  <button class="primary" style="width:100%;margin-top:13px" id="saveBill">Save Bill</button>
+ </div>
+ <div class="section-title"><h3>All Bills</h3></div><div id="allBills"></div>
+</section>
+
+<section id="livePage" class="hidden">
+ <div class="section-title"><h3>Live Material Calculator</h3><span class="pill">Instant results</span></div>
+ <div class="card">
+  <div class="field"><label>Nag Quantity · 1440 Nag = 17 AED</label><input id="liveNag" type="number" min="0" step="any" value="0"></div>
+  <div class="result">Nag Amount: <strong id="liveNagAmt">0.00 AED</strong></div>
+  <div class="field"><label>Crystal Quantity · 200 Crystal = 10 AED</label><input id="liveCrystal" type="number" min="0" step="any" value="0"></div>
+  <div class="result">Crystal Amount: <strong id="liveCrystalAmt">0.00 AED</strong></div>
+  <div class="field"><label>BN Quantity · 200 BN = 10 AED</label><input id="liveBn" type="number" min="0" step="any" value="0"></div>
+  <div class="result">BN Amount: <strong id="liveBnAmt">0.00 AED</strong></div>
+  <div class="result"><div class="muted">TOTAL MATERIAL AMOUNT</div><strong id="liveTotal">0.00 AED</strong></div>
+ </div>
+</section>
+
+<section id="ratioPage" class="hidden">
+ <div class="section-title"><h3>Separate Ratio Calculator</h3></div>
+ <div class="card">
+  <p class="muted">Enter the total quantity and the ratio parts for each material. The app splits the quantity by ratio and calculates each material amount using the saved rates.</p>
+  <div class="field"><label>Total Quantity</label><input id="ratioTotal" type="number" min="0" step="any" value="1000"></div>
+  <div class="row">
+   <div class="field"><label>Nag Ratio Parts</label><input id="ratioNag" type="number" min="0" step="any" value="1"></div>
+   <div class="field"><label>Crystal Ratio Parts</label><input id="ratioCrystal" type="number" min="0" step="any" value="1"></div>
+   <div class="field"><label>BN Ratio Parts</label><input id="ratioBn" type="number" min="0" step="any" value="1"></div>
+  </div>
+  <button class="primary" style="width:100%" id="ratioCalc">Calculate Ratio</button>
+  <div class="result" id="ratioResult"><strong>Enter values and calculate</strong></div>
+ </div>
+</section>
+
+<section id="profilePage" class="hidden">
+ <div class="section-title"><h3>My Profile</h3></div>
+ <div class="card">
+  <div style="text-align:center"><img id="profileAvatar" class="avatar" style="width:104px;height:104px" alt="Profile picture"><div style="margin:10px"><label class="ghost" for="photoInput" style="display:inline-block;padding:9px 12px;border:1px solid var(--line);border-radius:12px">Change Profile Picture</label><input id="photoInput" class="hidden" type="file" accept="image/*"></div></div>
+  <div class="field"><label>Display Name</label><input id="profileName" value="Mohammd Afsar"></div>
+  <div class="field"><label>User ID</label><input id="profileUser" disabled></div>
+  <button class="primary" style="width:100%" id="saveProfile">Save Profile</button>
+ </div>
+ <div class="card"><h3>Change Password</h3><div class="field"><label>Current Password</label><input id="oldPass" type="password"></div><div class="field"><label>New Password</label><input id="newPass" type="password"></div><button class="gold" style="width:100%" id="changePass">Update Password</button></div>
+</section>
+
+<section id="reportsPage" class="hidden">
+ <div class="section-title"><h3>Business Reports</h3></div>
+ <div class="grid">
+  <div class="card stat"><div class="label">Total Nag</div><strong id="reportNag">0</strong></div>
+  <div class="card stat"><div class="label">Total Crystal</div><strong id="reportCrystal">0</strong></div>
+  <div class="card stat"><div class="label">Total BN</div><strong id="reportBn">0</strong></div>
+  <div class="card stat"><div class="label">Total Balance Due</div><strong id="reportBalance">0 AED</strong></div>
+ </div>
+ <div class="card"><button class="ghost" id="exportCsv" style="width:100%">Export Bills as CSV</button></div>
+</section>
+</main>
+<nav class="tabs">
+ <button class="active" data-page="dashboardPage"><b>⌂</b>Home</button>
+ <button data-page="invoicePage"><b>▤</b>Bills</button>
+ <button data-page="livePage"><b>∑</b>Live Calc</button>
+ <button data-page="ratioPage"><b>⚖</b>Ratio</button>
+ <button data-page="profilePage"><b>●</b>Profile</button>
+</nav>
+</div>
+<div id="toast" class="toast hidden"></div>
+<script>
+const $=id=>document.getElementById(id);
+const RATE={nagQty:1440,nagAED:17,crystalQty:200,crystalAED:10,bnQty:200,bnAED:10};
+const DB='algaida_nag_work_v1';
+let users={},currentUser=null,authMode='login',state=null;
+const money=n=>(Number(n)||0).toFixed(2)+' AED';
+const num=id=>Math.max(0,Number($(id).value)||0);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(t){$('toast').textContent=t;$('toast').classList.remove('hidden');setTimeout(()=> $('toast').classList.add('hidden'),2300)}
+function readDB(){try{users=JSON.parse(localStorage.getItem(DB)||'{}')}catch{users={}}}
+function writeDB(){localStorage.setItem(DB,JSON.stringify(users))}
+function defaultState(){return {name:'Mohammd Afsar',photo:'',bills:[],theme:'light'}}
+function userKey(){return currentUser.toLowerCase()}
+function saveState(){users[userKey()].data=state;writeDB()}
+function showAuth(mode){authMode=mode;$('authTitle').textContent=mode==='login'?'Welcome Back':'Create Account';$('authDesc').textContent=mode==='login'?'Login to your account':'Create your local business account';$('authSubmit').textContent=mode==='login'?'Login':'Sign Up';$('authSwitch').textContent=mode==='login'?'Create new account':'Back to Login';$('authPass').value=''}
+async function hashPassword(password,salt){const enc=new TextEncoder();const key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']);const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(salt),iterations:150000,hash:'SHA-256'},key,256);return [...new Uint8Array(bits)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+$('authSwitch').onclick=()=>showAuth(authMode==='login'?'signup':'login');
+$('authSubmit').onclick=async()=>{
+ const id=$('authUser').value.trim(),pw=$('authPass').value;
+ if(!id||pw.length<6){toast('Enter User ID and a password of at least 6 characters');return}
+ readDB();const key=id.toLowerCase();
+ if(authMode==='signup'){
+  if(users[key]){toast('This User ID already exists');return}
+  const salt=crypto.randomUUID();const hash=await hashPassword(pw,salt);
+  users[key]={salt,hash,data:defaultState()};writeDB();currentUser=id;state=users[key].data;enterApp();toast('Account created')
+ }else{
+  const u=users[key];if(!u||await hashPassword(pw,u.salt)!==u.hash){toast('Incorrect User ID or password');return}
+  currentUser=id;state=u.data||defaultState();enterApp()
+ }
+};
+function enterApp(){$('authScreen').classList.add('hidden');$('app').classList.remove('hidden');applyTheme();render();go('dashboardPage')}
+$('logoutBtn').onclick=()=>{saveState();currentUser=null;state=null;$('app').classList.add('hidden');$('authScreen').classList.remove('hidden');showAuth('login')};
+function applyTheme(){document.documentElement.dataset.theme=state?.theme||'light';$('themeBtn').textContent=state?.theme==='dark'?'☀':'☾'}
+$('themeBtn').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark';saveState();applyTheme()};
+function go(page){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));$(page).classList.remove('hidden');document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='invoicePage')renderBills();if(page==='reportsPage')renderReports()}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+function calc(nag,crystal,bn){const a=nag*RATE.nagAED/RATE.nagQty,b=crystal*RATE.crystalAED/RATE.crystalQty,c=bn*RATE.bnAED/RATE.bnQty;return {a,b,c,total:a+b+c}}
+function updateBillCalc(){const x=calc(num('nagQty'),num('crystalQty'),num('bnQty')),work=num('work'),booking=num('booking');$('nagAmt').textContent=money(x.a);$('crystalAmt').textContent=money(x.b);$('bnAmt').textContent=money(x.c);$('materialAmt').textContent=money(x.total);$('workAmt2').textContent=money(work);$('bookingAmt2').textContent=money(booking);$('balanceAmt').textContent=money(work+x.total-booking)}
+['nagQty','crystalQty','bnQty','work','booking'].forEach(id=>$(id).addEventListener('input',updateBillCalc));
+function nextBill(){return 'INV-'+String((state?.bills?.length||0)+1).padStart(4,'0')}
+function clearBill(){['modelNo','customer','notes'].forEach(id=>$(id).value='');['nagQty','crystalQty','bnQty','booking','work'].forEach(id=>$(id).value='0');$('billNo').value=nextBill();$('billDate').value=new Date().toISOString().slice(0,10);updateBillCalc()}
+$('newBillBtn').onclick=clearBill;
+$('saveBill').onclick=()=>{
+ const bill={id:crypto.randomUUID(),billNo:$('billNo').value.trim()||nextBill(),modelNo:$('modelNo').value.trim(),customer:$('customer').value.trim(),date:$('billDate').value,nag:num('nagQty'),crystal:num('crystalQty'),bn:num('bnQty'),booking:num('booking'),work:num('work'),notes:$('notes').value};
+ if(!bill.modelNo&&!bill.customer){toast('Enter at least a model number or customer name');return}
+ if(state.bills.some(b=>b.billNo.toLowerCase()===bill.billNo.toLowerCase())){toast('Bill number already exists');return}
+ state.bills.unshift(bill);saveState();render();clearBill();renderBills();toast('Bill saved successfully')
+};
+function billHTML(b){const x=calc(b.nag,b.crystal,b.bn);return `<div class="invoice"><div class="invoice-head"><span>${esc(b.billNo)} · ${esc(b.modelNo||'No model')}</span><span>${money(b.work+x.total)}</span></div><p>${esc(b.customer||'Customer not entered')} · ${esc(b.date||'')}</p><p>Nag ${b.nag} · Crystal ${b.crystal} · BN ${b.bn} · Booking ${money(b.booking)}</p><p>Balance due: <b>${money(b.work+x.total-b.booking)}</b></p><button class="ghost" data-delete="${b.id}">Delete</button></div>`}
+function attachDelete(){document.querySelectorAll('[data-delete]').forEach(btn=>btn.onclick=()=>{if(confirm('Delete this bill?')){state.bills=state.bills.filter(b=>b.id!==btn.dataset.delete);saveState();render();renderBills();toast('Bill deleted')}})}
+function renderBills(){const q=($('globalSearch').value||'').toLowerCase();const list=state.bills.filter(b=>[b.billNo,b.modelNo,b.customer].join(' ').toLowerCase().includes(q));$('allBills').innerHTML=list.length?list.map(billHTML).join(''):'<div class="card muted">No bills found.</div>';attachDelete()}
+$('searchBtn').onclick=()=>{go('invoicePage');renderBills()};
+$('globalSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){$('searchBtn').click()}});
+function render(){const bills=state.bills||[];let booking=0,work=0,mat=0,nag=0,crystal=0,bn=0,balance=0;bills.forEach(b=>{const x=calc(b.nag,b.crystal,b.bn);booking+=b.booking;work+=b.work;mat+=x.total;nag+=b.nag;crystal+=b.crystal;bn+=b.bn;balance+=b.work+x.total-b.booking});
+ $('dashName').textContent=state.name||currentUser;$('dashAvatar').src=state.photo||avatarFallback();$('profileAvatar').src=state.photo||avatarFallback();$('profileName').value=state.name||'';$('profileUser').value=currentUser;
+ $('statBills').textContent=bills.length;$('statBooking').textContent=money(booking);$('statWork').textContent=money(work);$('statMaterial').textContent=money(mat);
+ $('recentBills').innerHTML=bills.slice(0,4).map(billHTML).join('')||'<div class="card muted">No bills saved yet. Create your first bill.</div>';attachDelete();
+ if(!$('billNo').value)clearBill();
+}
+function avatarFallback(){return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="100%" height="100%" fill="#dbeafe"/><text x="50%" y="55%" font-size="48" text-anchor="middle" fill="#1d4ed8">A</text></svg>`)}
+function renderReports(){let nag=0,crystal=0,bn=0,balance=0;state.bills.forEach(b=>{nag+=b.nag;crystal+=b.crystal;bn+=b.bn;const x=calc(b.nag,b.crystal,b.bn);balance+=b.work+x.total-b.booking});$('reportNag').textContent=nag.toLocaleString();$('reportCrystal').textContent=crystal.toLocaleString();$('reportBn').textContent=bn.toLocaleString();$('reportBalance').textContent=money(balance)}
+function liveCalc(){const x=calc(num('liveNag'),num('liveCrystal'),num('liveBn'));$('liveNagAmt').textContent=money(x.a);$('liveCrystalAmt').textContent=money(x.b);$('liveBnAmt').textContent=money(x.c);$('liveTotal').textContent=money(x.total)}
+['liveNag','liveCrystal','liveBn'].forEach(id=>$(id).addEventListener('input',liveCalc));
+$('ratioCalc').onclick=()=>{
+ const total=num('ratioTotal'),r=[num('ratioNag'),num('ratioCrystal'),num('ratioBn')],sum=r.reduce((a,b)=>a+b,0);
+ if(sum<=0){toast('Enter at least one ratio part');return}
+ const q=r.map(v=>total*v/sum),x=calc(...q);
+ $('ratioResult').innerHTML=`<table><tr><th>Material</th><th>Calculated Quantity</th><th>Amount</th></tr><tr><td>Nag</td><td>${q[0].toFixed(2)}</td><td>${money(x.a)}</td></tr><tr><td>Crystal</td><td>${q[1].toFixed(2)}</td><td>${money(x.b)}</td></tr><tr><td>BN</td><td>${q[2].toFixed(2)}</td><td>${money(x.c)}</td></tr></table><div style="margin-top:10px">Total ratio parts: <b>${sum}</b><br>Total quantity: <b>${total.toFixed(2)}</b><br><strong>Total Amount: ${money(x.total)}</strong></div>`;
+};
+$('photoInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;if(f.size>2*1024*1024){toast('Choose an image under 2 MB');return}const reader=new FileReader();reader.onload=()=>{state.photo=reader.result;saveState();render();toast('Profile picture updated')};reader.readAsDataURL(f)};
+$('saveProfile').onclick=()=>{state.name=$('profileName').value.trim()||currentUser;saveState();render();toast('Profile saved')};
+$('changePass').onclick=async()=>{const old=$('oldPass').value,nw=$('newPass').value,u=users[userKey()];if(!u||await hashPassword(old,u.salt)!==u.hash){toast('Current password is incorrect');return}if(nw.length<6){toast('New password must be at least 6 characters');return}u.salt=crypto.randomUUID();u.hash=await hashPassword(nw,u.salt);writeDB();$('oldPass').value='';$('newPass').value='';toast('Password updated')};
+$('exportCsv').onclick=()=>{const rows=[['Bill Number','Model Number','Customer','Date','Nag','Crystal','BN','Booking AED','Work AED','Material AED','Balance AED']];state.bills.forEach(b=>{const x=calc(b.nag,b.crystal,b.bn);rows.push([b.billNo,b.modelNo,b.customer,b.date,b.nag,b.crystal,b.bn,b.booking,b.work,x.total,b.work+x.total-b.booking])});const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='algaida-bills.csv';a.click();URL.revokeObjectURL(a.href)};
+readDB();showAuth('login');$('billDate').value=new Date().toISOString().slice(0,10);clearBill();liveCalc();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>
