@@ -1,0 +1,711 @@
+
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>ALGAIDA NAG WORK — MOHAMMD AFSAR</title>
+<style>
+:root{--bg:#f3f6fb;--panel:#fff;--text:#172033;--muted:#68758a;--line:#e4eaf2;--accent:#2563eb;--accent2:#7c3aed;--good:#059669;--bad:#dc2626;--shadow:0 8px 28px #15213b12}
+[data-theme="dark"]{--bg:#0b1220;--panel:#141e30;--text:#edf3ff;--muted:#9aabc4;--line:#29364b;--accent:#60a5fa;--accent2:#a78bfa;--good:#34d399;--bad:#fb7185;--shadow:0 8px 28px #0004}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0;border-radius:12px;padding:11px 14px;background:var(--accent);color:white;font-weight:650}
+button.secondary{background:var(--bg);color:var(--text);border:1px solid var(--line)}
+button.danger{background:var(--bad)}
+input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--text);outline:none}
+input:focus,select:focus{border-color:var(--accent)}
+label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
+.wrap{max-width:1100px;margin:auto;padding:16px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:white;font-weight:900}
+h1{font-size:18px;margin:0}
+small,.muted{color:var(--muted)}
+.top-actions{display:flex;gap:8px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+.stat{font-size:25px;font-weight:800;margin-top:7px}
+.section-title{font-size:17px;font-weight:800;margin:0 0 14px}
+.layout{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.field.full{grid-column:1/-1}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.tabs{display:flex;gap:8px;overflow:auto;margin:14px 0}
+.tabs button{white-space:nowrap}
+.tabs button.active{background:var(--accent2)}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th,td{text-align:left;padding:11px;border-bottom:1px solid var(--line);font-size:13px}
+th{color:var(--muted)}
+.table-wrap{overflow:auto}
+.pill{display:inline-block;padding:4px 9px;border-radius:30px;background:var(--bg);font-size:12px;color:var(--muted)}
+.result{font-size:28px;font-weight:850;color:var(--good);margin-top:8px}
+.profile{display:flex;align-items:center;gap:12px}
+.avatar{width:62px;height:62px;border-radius:50%;object-fit:cover;background:var(--bg);border:2px solid var(--line)}
+.hidden{display:none!important}
+.login{max-width:420px;margin:8vh auto}
+.hint{font-size:12px;color:var(--muted);line-height:1.5}
+.empty{text-align:center;padding:22px;color:var(--muted)}
+@media(max-width:760px){
+.grid{grid-template-columns:repeat(2,1fr)}
+.layout{grid-template-columns:1fr}
+.wrap{padding:12px}
+.stat{font-size:21px}
+.top{align-items:flex-start}
+.top-actions{flex-wrap:wrap;justify-content:flex-end}
+.fields{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="loginView" class="wrap login">
+ <div class="card">
+  <div class="brand">
+   <div class="logo">AN</div>
+   <div>
+    <h1>ALGAIDA NAG WORK</h1>
+    <small>MOHAMMD AFSAR</small>
+   </div>
+  </div>
+  <h2 style="margin:24px 0 6px">आपका बिजनेस अकाउंट</h2>
+  <p class="muted">पहली बार इस्तेमाल पर अपना पासवर्ड बनाएँ।</p>
+  <form id="authForm">
+   <div style="margin:12px 0">
+    <label>यूज़र आईडी</label>
+    <input id="authUser" required autocomplete="username" placeholder="अपना यूज़र आईडी">
+   </div>
+   <div style="margin:12px 0">
+    <label>पासवर्ड</label>
+    <input id="authPass" type="password" required minlength="4" autocomplete="current-password" placeholder="पासवर्ड">
+   </div>
+   <button style="width:100%">लॉगिन / अकाउंट बनाएँ</button>
+  </form>
+  <p class="hint" style="margin-top:14px">पहली बार यूज़र आईडी और कम-से-कम 4 अक्षर का पासवर्ड डालें।</p>
+  <p id="authError" style="color:var(--bad)"></p>
+ </div>
+</div>
+
+<div id="appView" class="wrap hidden">
+ <header class="top">
+  <div class="brand">
+   <div class="logo">AN</div>
+   <div>
+    <h1>ALGAIDA NAG WORK</h1>
+    <small>MOHAMMD AFSAR · Business Hisab</small>
+   </div>
+  </div>
+  <div class="top-actions">
+   <button class="secondary" id="themeBtn">🌙 Dark</button>
+   <button class="secondary" id="logoutBtn">Logout</button>
+  </div>
+ </header>
+
+ <nav class="tabs">
+  <button class="active" data-tab="dashboard">Dashboard</button>
+  <button class="secondary" data-tab="entry">New Bill</button>
+  <button class="secondary" data-tab="records">All Records</button>
+  <button class="secondary" data-tab="salary">Salary</button>
+  <button class="secondary" data-tab="ratio">Ratio Calculator</button>
+  <button class="secondary" data-tab="profile">My Profile</button>
+ </nav>
+
+ <section id="dashboard" class="tabpage">
+  <div class="grid">
+   <div class="card"><small>Total Bills</small><div class="stat" id="totalBills">0</div></div>
+   <div class="card"><small>Total Booking</small><div class="stat" id="totalBooking">0 AED</div></div>
+   <div class="card"><small>Total Work Amount</small><div class="stat" id="totalWork">0 AED</div></div>
+   <div class="card"><small>Monthly Salary</small><div class="stat" id="monthSalary">0 AED</div></div>
+  </div>
+
+  <div class="layout">
+   <div class="card">
+    <h3 class="section-title">Live Material Calculation</h3>
+    <div class="fields">
+     <div>
+      <label>Material</label>
+      <select id="dashType">
+       <option value="nag">Nag</option>
+       <option value="crystal">Crystal</option>
+       <option value="bn">BN</option>
+      </select>
+     </div>
+     <div>
+      <label>Quantity (Pieces)</label>
+      <input id="dashQty" type="number" min="0" step="any" value="1440">
+     </div>
+    </div>
+    <div class="result" id="dashResult">17.00 AED</div>
+    <small id="dashFormula">1440 Nag = 17 AED</small>
+   </div>
+
+   <div class="card">
+    <h3 class="section-title">Quick Actions</h3>
+    <div class="actions">
+     <button onclick="showTab('entry')">＋ New Bill</button>
+     <button class="secondary" onclick="showTab('records')">Search Bill</button>
+     <button class="secondary" onclick="showTab('ratio')">Ratio Calculator</button>
+     <button class="secondary" onclick="showTab('salary')">Salary</button>
+    </div>
+   </div>
+  </div>
+
+  <div class="card">
+   <h3 class="section-title">Recent Bills</h3>
+   <div id="recentBills" class="table-wrap"></div>
+  </div>
+ </section>
+
+ <section id="entry" class="tabpage hidden">
+  <div class="card">
+   <h3 class="section-title">New Bill / Work Entry</h3>
+   <form id="billForm">
+    <div class="fields">
+     <div>
+      <label>Bill Number</label>
+      <input id="billNo" required placeholder="उदा. 1001">
+     </div>
+     <div>
+      <label>Date</label>
+      <input id="billDate" type="date" required>
+     </div>
+     <div>
+      <label>Model Number</label>
+      <input id="modelNo" placeholder="Model number">
+     </div>
+
+     <div class="field full">
+      <label>Nag — Quantity (Pieces)</label>
+      <input id="nagQty" type="number" min="0" step="any" value="0">
+      <small id="nagAmount" class="muted">0.00 AED · 1440 = 17 AED</small>
+     </div>
+
+     <div class="field full">
+      <label>Crystal — Quantity (Pieces)</label>
+      <input id="crystalQty" type="number" min="0" step="any" value="0">
+      <small id="crystalAmount" class="muted">0.00 AED · 200 = 10 AED</small>
+     </div>
+
+     <div class="field full">
+      <label>BN — Quantity (Pieces)</label>
+      <input id="bnQty" type="number" min="0" step="any" value="0">
+      <small id="bnAmount" class="muted">0.00 AED · 200 = 10 AED</small>
+     </div>
+
+     <div class="field full">
+      <label>Total Material Amount (AED)</label>
+      <input id="materialAmount" readonly>
+     </div>
+
+     <div>
+      <label>Booking Amount (AED)</label>
+      <input id="booking" type="number" min="0" step="0.01" value="0">
+     </div>
+     <div>
+      <label>Work Amount (AED)</label>
+      <input id="work" type="number" min="0" step="0.01" value="0">
+     </div>
+     <div class="field full">
+      <label>Details / Notes</label>
+      <input id="notes" placeholder="काम की जानकारी">
+     </div>
+    </div>
+
+    <div class="actions">
+     <button type="submit">Save Bill</button>
+     <button type="reset" class="secondary">Clear</button>
+    </div>
+   </form>
+   <p class="hint">Nag: 1440 पीस = 17 AED · Crystal और BN: 200 पीस = 10 AED.</p>
+  </div>
+ </section>
+
+ <section id="records" class="tabpage hidden">
+  <div class="card">
+   <h3 class="section-title">Search & All Bills</h3>
+   <input id="searchBill" placeholder="Bill number, model number या material से खोजें...">
+   <div id="allBills" class="table-wrap" style="margin-top:14px"></div>
+  </div>
+ </section>
+
+ <section id="salary" class="tabpage hidden">
+  <div class="layout">
+   <div class="card">
+    <h3 class="section-title">Add Salary Entry</h3>
+    <form id="salaryForm">
+     <div class="fields">
+      <div class="field full">
+       <label>Employee Name</label>
+       <input id="salaryName" value="MOHAMMD AFSAR" required>
+      </div>
+      <div>
+       <label>Month</label>
+       <input id="salaryMonth" type="month" required>
+      </div>
+      <div>
+       <label>Salary Amount (AED)</label>
+       <input id="salaryAmount" type="number" min="0" step=".01" required>
+      </div>
+      <div>
+       <label>Paid Amount (AED)</label>
+       <input id="salaryPaid" type="number" min="0" step=".01" value="0">
+      </div>
+      <div>
+       <label>Work Days</label>
+       <input id="salaryDays" type="number" min="0" step="1" value="0">
+      </div>
+     </div>
+     <div class="actions"><button type="submit">Save Salary</button></div>
+    </form>
+   </div>
+
+   <div class="card">
+    <h3 class="section-title">Monthly Salary Summary</h3>
+    <small>Selected month total salary</small>
+    <div class="result" id="salarySummary">0 AED</div>
+    <p class="muted" id="salaryPaidSummary">Paid: 0 AED · Balance: 0 AED</p>
+   </div>
+  </div>
+
+  <div class="card">
+   <h3 class="section-title">Salary History</h3>
+   <div id="salaryHistory" class="table-wrap"></div>
+  </div>
+ </section>
+
+ <section id="ratio" class="tabpage hidden">
+  <div class="card">
+   <h3 class="section-title">Ratio Calculator</h3>
+   <div class="fields">
+    <div>
+     <label>Material</label>
+     <select id="ratioType">
+      <option value="nag">Nag (1440 = 17 AED)</option>
+      <option value="crystal">Crystal (200 = 10 AED)</option>
+      <option value="bn">BN (200 = 10 AED)</option>
+     </select>
+    </div>
+    <div>
+     <label>Ratio / Quantity (Pieces)</label>
+     <input id="ratioQty" type="number" min="0" step="any" value="1440">
+    </div>
+   </div>
+   <div class="result" id="ratioResult">17.00 AED</div>
+   <p class="muted" id="ratioDetail">1440 Nag = 17 AED</p>
+  </div>
+ </section>
+
+ <section id="profile" class="tabpage hidden">
+  <div class="card">
+   <h3 class="section-title">My Profile</h3>
+   <div class="profile">
+    <img id="avatar" class="avatar" alt="Profile picture">
+    <div>
+     <b id="profileName">MOHAMMD AFSAR</b>
+     <p class="muted" id="profileUser"></p>
+    </div>
+   </div>
+   <div style="max-width:440px;margin-top:18px">
+    <label>Profile Picture</label>
+    <input id="photoInput" type="file" accept="image/*">
+    <div class="actions">
+     <button class="secondary" id="removePhoto" type="button">Remove Photo</button>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <footer class="hint" style="text-align:center;padding:12px">
+  ALGAIDA NAG WORK · MOHAMMD AFSAR
+ </footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const KEY='algaidaNagWork_v1';
+
+let db=JSON.parse(localStorage.getItem(KEY)||
+'{"users":{},"bills":[],"salaries":[],"profilePhoto":""}');
+
+let currentUser='',dark=false;
+
+const save=()=>localStorage.setItem(KEY,JSON.stringify(db));
+
+const money=n=>(Number(n)||0).toLocaleString('en-US',{
+ minimumFractionDigits:2,
+ maximumFractionDigits:2
+});
+
+function amount(type,qty){
+ let q=Number(qty)||0;
+ return type==='nag'?q*17/1440:q*10/200;
+}
+
+function calc(type,qty,result,formula){
+ let a=amount(type,qty);
+ $(result).textContent=money(a)+' AED';
+ if(formula){
+  $(formula).textContent=
+  `${qty||0} ${type==='nag'?'Nag':type==='crystal'?'Crystal':'BN'} = ${money(a)} AED`;
+ }
+}
+
+function init(){
+ $('billDate').value=new Date().toISOString().slice(0,10);
+ $('salaryMonth').value=new Date().toISOString().slice(0,7);
+
+ const theme=localStorage.getItem('algaidaTheme')||'light';
+ document.documentElement.dataset.theme=theme;
+ dark=theme==='dark';
+ $('themeBtn').textContent=dark?'☀️ Light':'🌙 Dark';
+
+ if(currentUser){
+  $('loginView').classList.add('hidden');
+  $('appView').classList.remove('hidden');
+  refresh();
+ }
+}
+
+$('authForm').addEventListener('submit',e=>{
+ e.preventDefault();
+
+ let u=$('authUser').value.trim();
+ let p=$('authPass').value;
+
+ if(!u||p.length<4)return;
+
+ if(!db.users[u]){
+  db.users[u]={password:p};
+  save();
+ }else if(db.users[u].password!==p){
+  $('authError').textContent='यूज़र आईडी या पासवर्ड गलत है।';
+  return;
+ }
+
+ currentUser=u;
+ $('authError').textContent='';
+ init();
+});
+
+$('logoutBtn').onclick=()=>{
+ currentUser='';
+ $('appView').classList.add('hidden');
+ $('loginView').classList.remove('hidden');
+ $('authPass').value='';
+};
+
+$('themeBtn').onclick=()=>{
+ dark=!dark;
+ document.documentElement.dataset.theme=dark?'dark':'light';
+ localStorage.setItem('algaidaTheme',dark?'dark':'light');
+ $('themeBtn').textContent=dark?'☀️ Light':'🌙 Dark';
+};
+
+function showTab(id){
+ document.querySelectorAll('.tabpage').forEach(x=>x.classList.add('hidden'));
+ $(id).classList.remove('hidden');
+
+ document.querySelectorAll('.tabs button').forEach(b=>{
+  b.classList.toggle('active',b.dataset.tab===id);
+  b.classList.toggle('secondary',b.dataset.tab!==id);
+ });
+
+ if(id==='records')renderBills();
+ if(id==='salary')renderSalary();
+}
+window.showTab=showTab;
+
+document.querySelectorAll('[data-tab]').forEach(b=>{
+ b.onclick=()=>showTab(b.dataset.tab);
+});
+
+$('dashType').onchange=()=>{
+ calc($('dashType').value,$('dashQty').value,'dashResult','dashFormula');
+};
+
+$('dashQty').oninput=()=>{
+ calc($('dashType').value,$('dashQty').value,'dashResult','dashFormula');
+};
+
+/* THREE SEPARATE MATERIAL ROWS */
+
+function updateMaterial(){
+ let nq=Number($('nagQty').value)||0;
+ let cq=Number($('crystalQty').value)||0;
+ let bq=Number($('bnQty').value)||0;
+
+ let na=amount('nag',nq);
+ let ca=amount('crystal',cq);
+ let ba=amount('bn',bq);
+
+ $('nagAmount').textContent=money(na)+' AED';
+ $('crystalAmount').textContent=money(ca)+' AED';
+ $('bnAmount').textContent=money(ba)+' AED';
+
+ $('materialAmount').value=money(na+ca+ba);
+}
+
+['nagQty','crystalQty','bnQty'].forEach(id=>{
+ $(id).oninput=updateMaterial;
+});
+
+/* SAVE BILL */
+
+$('billForm').addEventListener('submit',e=>{
+ e.preventDefault();
+
+ let no=$('billNo').value.trim();
+
+ if(db.bills.some(b=>b.user===currentUser&&b.no===no)){
+  alert('यह Bill Number पहले से मौजूद है।');
+  return;
+ }
+
+ let nq=Number($('nagQty').value)||0;
+ let cq=Number($('crystalQty').value)||0;
+ let bq=Number($('bnQty').value)||0;
+
+ let na=amount('nag',nq);
+ let ca=amount('crystal',cq);
+ let ba=amount('bn',bq);
+
+ db.bills.unshift({
+  id:Date.now(),
+  user:currentUser,
+  no,
+  date:$('billDate').value,
+  model:$('modelNo').value,
+  nagQty:nq,
+  crystalQty:cq,
+  bnQty:bq,
+  nagAmount:na,
+  crystalAmount:ca,
+  bnAmount:ba,
+  materialAmount:na+ca+ba,
+  booking:Number($('booking').value)||0,
+  work:Number($('work').value)||0,
+  notes:$('notes').value
+ });
+
+ save();
+
+ e.target.reset();
+ $('billDate').value=new Date().toISOString().slice(0,10);
+ updateMaterial();
+ refresh();
+
+ alert('Bill save हो गया।');
+ showTab('records');
+});
+
+function bills(){
+ return db.bills.filter(b=>b.user===currentUser);
+}
+
+/* BILL TABLE */
+
+function tableBills(list){
+ if(!list.length){
+  return '<div class="empty">अभी कोई बिल सेव नहीं है।</div>';
+ }
+
+ return `<table>
+ <thead>
+ <tr>
+ <th>Bill No.</th>
+ <th>Date</th>
+ <th>Model</th>
+ <th>Nag Qty</th>
+ <th>Crystal Qty</th>
+ <th>BN Qty</th>
+ <th>Material AED</th>
+ <th>Booking</th>
+ <th>Work</th>
+ <th></th>
+ </tr>
+ </thead>
+ <tbody>
+ ${list.map(b=>`
+ <tr>
+ <td>${esc(b.no)}</td>
+ <td>${esc(b.date)}</td>
+ <td>${esc(b.model)}</td>
+ <td>${b.nagQty??(b.material==='Nag'?b.qty:0)}</td>
+ <td>${b.crystalQty??(b.material==='Crystal'?b.qty:0)}</td>
+ <td>${b.bnQty??(b.material==='BN'?b.qty:0)}</td>
+ <td>${money(b.materialAmount)}</td>
+ <td>${money(b.booking)}</td>
+ <td>${money(b.work)}</td>
+ <td><button class="danger" onclick="deleteBill(${b.id})">Delete</button></td>
+ </tr>`).join('')}
+ </tbody>
+ </table>`;
+}
+
+function esc(s){
+ return String(s??'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;',
+  '<':'&lt;',
+  '>':'&gt;',
+  '"':'&quot;',
+  "'":'&#39;'
+ }[c]));
+}
+
+window.deleteBill=id=>{
+ if(confirm('इस बिल को हटाएँ?')){
+  db.bills=db.bills.filter(b=>b.id!==id);
+  save();
+  refresh();
+  renderBills();
+ }
+};
+
+function renderBills(){
+ $('allBills').innerHTML=tableBills(
+  bills().filter(b=>
+   [b.no,b.model,'Nag Crystal BN']
+   .join(' ')
+   .toLowerCase()
+   .includes($('searchBill').value.toLowerCase())
+  )
+ );
+}
+
+$('searchBill').oninput=renderBills;
+
+/* SALARY */
+
+function salaries(){
+ return db.salaries.filter(s=>s.user===currentUser);
+}
+
+$('salaryForm').addEventListener('submit',e=>{
+ e.preventDefault();
+
+ db.salaries.unshift({
+  id:Date.now(),
+  user:currentUser,
+  name:$('salaryName').value,
+  month:$('salaryMonth').value,
+  amount:Number($('salaryAmount').value)||0,
+  paid:Number($('salaryPaid').value)||0,
+  days:Number($('salaryDays').value)||0
+ });
+
+ save();
+ renderSalary();
+ refresh();
+ alert('Salary save हो गई।');
+});
+
+function renderSalary(){
+ let m=$('salaryMonth').value;
+ let arr=salaries().filter(s=>s.month===m);
+
+ let total=arr.reduce((a,s)=>a+s.amount,0);
+ let paid=arr.reduce((a,s)=>a+s.paid,0);
+
+ $('salarySummary').textContent=money(total)+' AED';
+
+ $('salaryPaidSummary').textContent=
+ `Paid: ${money(paid)} AED · Balance: ${money(total-paid)} AED`;
+
+ $('salaryHistory').innerHTML=arr.length?
+ `<table>
+ <thead>
+ <tr><th>Name</th><th>Month</th><th>Salary</th><th>Paid</th><th>Balance</th><th>Days</th></tr>
+ </thead>
+ <tbody>
+ ${arr.map(s=>`
+ <tr>
+ <td>${esc(s.name)}</td>
+ <td>${s.month}</td>
+ <td>${money(s.amount)}</td>
+ <td>${money(s.paid)}</td>
+ <td>${money(s.amount-s.paid)}</td>
+ <td>${s.days}</td>
+ </tr>`).join('')}
+ </tbody>
+ </table>`:
+ '<div class="empty">इस महीने की salary entry नहीं है।</div>';
+}
+
+$('salaryMonth').onchange=renderSalary;
+
+/* DASHBOARD */
+
+function refresh(){
+ let a=bills();
+
+ $('totalBills').textContent=a.length;
+
+ $('totalBooking').textContent=
+ money(a.reduce((x,b)=>x+b.booking,0))+' AED';
+
+ $('totalWork').textContent=
+ money(a.reduce((x,b)=>x+b.work,0))+' AED';
+
+ let m=new Date().toISOString().slice(0,7);
+
+ $('monthSalary').textContent=
+ money(salaries().filter(s=>s.month===m)
+ .reduce((x,s)=>x+s.amount,0))+' AED';
+
+ $('recentBills').innerHTML=tableBills(a.slice(0,5));
+
+ $('profileUser').textContent='User ID: '+currentUser;
+
+ $('avatar').src=db.profilePhoto||
+ 'data:image/svg+xml,'+encodeURIComponent(
+ '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100%" height="100%" fill="#64748b"/><text x="50%" y="58%" text-anchor="middle" font-size="35" fill="white">MA</text></svg>'
+ );
+}
+
+/* RATIO CALCULATOR */
+
+$('ratioType').onchange=()=>{
+ calc($('ratioType').value,$('ratioQty').value,'ratioResult','ratioDetail');
+};
+
+$('ratioQty').oninput=()=>{
+ calc($('ratioType').value,$('ratioQty').value,'ratioResult','ratioDetail');
+};
+
+/* PROFILE PHOTO */
+
+$('photoInput').onchange=e=>{
+ let f=e.target.files[0];
+ if(!f)return;
+
+ let r=new FileReader();
+
+ r.onload=()=>{
+  db.profilePhoto=r.result;
+  save();
+  refresh();
+ };
+
+ r.readAsDataURL(f);
+};
+
+$('removePhoto').onclick=()=>{
+ db.profilePhoto='';
+ save();
+ refresh();
+ $('photoInput').value='';
+};
+
+/* START APP */
+
+init();
+updateMaterial();
+
+calc('nag',1440,'dashResult','dashFormula');
+calc('nag',1440,'ratioResult','ratioDetail');
+
+</script>
+</body>
+</html>
