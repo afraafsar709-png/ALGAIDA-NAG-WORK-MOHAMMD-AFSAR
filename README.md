@@ -1,87 +1,36 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101827"><title>ALGAIDA NAG WORK</title>
-<style>
-:root{--bg:#f2f5fa;--panel:#fff;--text:#172033;--muted:#68758a;--line:#e2e8f0;--accent:#2563eb;--gold:#d6a84f}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,Arial}body.dark{--bg:#0b1220;--panel:#151f30;--text:#edf2fa;--muted:#a5b2c5;--line:#29364a;--accent:#6ea2ff}
-header{background:#101827;color:white;padding:18px 16px;position:sticky;top:0;z-index:2}header b{font-size:18px;letter-spacing:.4px}header small{display:block;color:#d6a84f;margin-top:3px}
-main{max-width:900px;margin:auto;padding:14px}.nav{display:flex;gap:8px;overflow:auto;margin:12px 0}.nav button,.btn{border:0;border-radius:11px;padding:11px 14px;background:var(--accent);color:white;font-weight:650}.nav button{background:var(--panel);color:var(--text);border:1px solid var(--line);white-space:nowrap}.nav button.active{background:var(--accent);color:white}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px;margin:12px 0;box-shadow:0 4px 18px #00000008}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}.metric{padding:13px;border-radius:12px;background:var(--bg)}.metric small{color:var(--muted)}.metric strong{display:block;font-size:20px;margin-top:5px}
-input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);margin:5px 0 12px;font:inherit}label{font-size:13px;color:var(--muted)}h2{font-size:19px;margin:4px 0 12px}h3{font-size:16px;margin:8px 0}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.itemrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;background:var(--bg);border-radius:12px;margin:8px 0}.total{font-size:22px;font-weight:800;color:var(--accent)}.muted{color:var(--muted);font-size:13px}.hidden{display:none!important}.right{float:right}.danger{background:#b42318}.success{color:#15945a}button:disabled{opacity:.5}table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;padding:9px;border-bottom:1px solid var(--line)}.scroll{overflow:auto}.avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;background:var(--bg);display:block;margin:5px 0}
-</style>
-</head>
-<body>
-<header><b>ALGAIDA NAG WORK</b><small>MOHAMMD AFSAR · Business Management</small></header>
-<main>
-<section id="auth" class="card">
-<h2>Login / Create Account</h2>
-<p class="muted">Sign in with your email and password. Admin access must be assigned securely in Firebase.</p>
-<label>Email</label><input id="email" type="email" autocomplete="username" placeholder="name@example.com">
-<label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Password">
-<div class="row"><button class="btn" id="login">Login</button><button class="btn" id="signup">Create Employee Account</button></div>
-<p id="authmsg" class="muted"></p>
-</section>
-<section id="app" class="hidden">
-<div class="nav">
-<button data-tab="dashboard" class="active">Dashboard</button><button data-tab="bill">New Bill</button><button data-tab="calculator">Calculator</button><button data-tab="salary">My Salary</button><button data-tab="profile">My Profile</button><button id="theme">Dark / Light</button><button id="logout">Logout</button>
-</div>
-<section id="dashboard" class="tab">
-<div class="card"><h2>Dashboard</h2><input id="search" placeholder="Search bill, model or customer...">
-<div class="grid" id="metrics"></div></div>
-<div class="card"><h3>Recent Bills</h3><div class="scroll"><table><thead><tr><th>Bill</th><th>Model</th><th>Date</th><th>Nag</th><th>Crystal</th><th>BN</th><th>Charges</th></tr></thead><tbody id="billrows"></tbody></table></div></div>
-</section>
-<section id="bill" class="tab hidden">
-<div class="card"><h2>New Bill</h2>
-<div class="row"><div><label>Bill Number</label><input id="billno" readonly></div><div><label>Model Number</label><input id="model" placeholder="Model number"></div></div>
-<div class="row"><div><label>Booking Amount (AED)</label><input id="booking" type="number" min="0" value="0"></div><div><label>Work Amount (AED)</label><input id="work" type="number" min="0" value="0"></div></div>
-<label>Bill Date</label><input id="billdate" type="date">
-<h3>Nag · 1440 pieces = 17 AED</h3><div class="itemrow"><div><label>Nag Quantity</label><input id="nag" type="number" min="0" value="0"></div><div><label>Nag Charges (AED)</label><input id="nagAED" readonly value="0.00"></div></div>
-<h3>Crystal · 200 pieces = 10 AED</h3><div class="itemrow"><div><label>Crystal Quantity</label><input id="crystal" type="number" min="0" value="0"></div><div><label>Crystal Charges (AED)</label><input id="crystalAED" readonly value="0.00"></div></div>
-<h3>BN · 200 pieces = 10 AED</h3><div class="itemrow"><div><label>BN Quantity</label><input id="bn" type="number" min="0" value="0"></div><div><label>BN Charges (AED)</label><input id="bnAED" readonly value="0.00"></div></div>
-<div class="card"><span class="muted">Total Nag + Crystal + BN Charges</span><div class="total" id="billtotal">AED 0.00</div><p class="muted">Booking and Work amounts are saved separately and are not included in piece charges.</p></div>
-<button class="btn" id="savebill">Save Bill</button><p id="billmsg" class="muted"></p></div>
-</section>
-<section id="calculator" class="tab hidden"><div class="card"><h2>Ratio Calculator</h2><label>Item</label><select id="ratioItem"><option value="nag">Nag (1440 = 17 AED)</option><option value="crystal">Crystal / BN (200 = 10 AED)</option></select><label>Quantity</label><input id="ratioQty" type="number" value="1440"><div class="total" id="ratioResult">AED 17.00</div><p class="muted">Enter quantity to calculate charges using the selected rate.</p></div></section>
-<section id="salary" class="tab hidden"><div class="card"><h2>My Salary</h2><div class="grid" id="salarymetrics"></div><h3>Monthly Salary Request</h3><label>Requested Salary Amount (AED)</label><input id="salaryamount" type="number" min="0" placeholder="Amount"><label>Month</label><input id="salarymonth" type="month"><label>Note</label><textarea id="salarynote" placeholder="Optional note"></textarea><button class="btn" id="requestsalary">Submit Salary Request</button><p id="salarymsg" class="muted"></p></div><div class="card"><h3>My Requests & Approval Status</h3><div id="requests"></div></div>
-<div id="adminpanel" class="card hidden"><h2>Admin Approval Panel</h2><p class="muted">Review employee salary requests from this separate admin login.</p><div id="adminrequests"></div></div>
-</section>
-<section id="profile" class="tab hidden"><div class="card"><h2>My Profile</h2><img id="avatar" class="avatar" alt="Profile picture"><label>Profile Picture</label><input id="photo" type="file" accept="image/*"><label>Display Name</label><input id="displayname" placeholder="Your name"><button class="btn" id="saveprofile">Save Profile</button><p id="profilemsg" class="muted"></p><p class="muted">Signed in: <span id="useremail"></span></p></div></section>
-</section>
-</main>
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import {getFirestore,collection,doc,setDoc,addDoc,getDocs,query,where,orderBy,serverTimestamp,updateDoc} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-// Add your Firebase web-app configuration in ../firebase-config.js (copy the example file).
-import {firebaseConfig} from "./firebase-config.js";
-const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
-const $=id=>document.getElementById(id); let user=null,role="employee",bills=[],requests=[],photoData="";
-const money=n=>"AED "+(Number(n)||0).toFixed(2);
-const rates={nag:17/1440,crystal:10/200,bn:10/200};
-function charges(){let n=+ $("nag").value||0,c=+$("crystal").value||0,b=+$("bn").value||0;let na=n*rates.nag,ca=c*rates.crystal,ba=b*rates.bn;$("nagAED").value=na.toFixed(2);$("crystalAED").value=ca.toFixed(2);$("bnAED").value=ba.toFixed(2);$("billtotal").textContent=money(na+ca+ba);return {nag:n,crystal:c,bn:b,nagAED:na,crystalAED:ca,bnAED:ba,total:na+ca+ba};}
-["nag","crystal","bn"].forEach(x=>$(x).addEventListener("input",charges));
-$("billdate").value=new Date().toISOString().slice(0,10); $("salarymonth").value=new Date().toISOString().slice(0,7);
-function tab(name){document.querySelectorAll(".tab").forEach(x=>x.classList.add("hidden"));$(name).classList.remove("hidden");document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x.dataset.tab===name));}
-document.querySelectorAll("[data-tab]").forEach(x=>x.onclick=()=>tab(x.dataset.tab));
-$("theme").onclick=()=>document.body.classList.toggle("dark");
-$("login").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email").value,$("password").value)}catch(e){$("authmsg").textContent=e.message}};
-$("signup").onclick=async()=>{try{await createUserWithEmailAndPassword(auth,$("email").value,$("password").value)}catch(e){$("authmsg").textContent=e.message}};
-$("logout").onclick=()=>signOut(auth);
-onAuthStateChanged(auth,async u=>{user=u;$("auth").classList.toggle("hidden",!!u);$("app").classList.toggle("hidden",!u);if(u)await loadAll()});
-async function loadAll(){const p=await getDocSafe(doc(db,"users",user.uid));role=p?.role||"employee";$("adminpanel").classList.toggle("hidden",role!=="admin");$("useremail").textContent=user.email;$("displayname").value=p?.displayName||"";$("avatar").src=p?.photoURL||"";$("billno").value="ANW-"+Date.now().toString().slice(-8);await loadBills();await loadRequests();if(role==="admin")await loadAdmin();}
-async function getDocSafe(ref){const {getDoc}=await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");try{let s=await getDoc(ref);return s.exists()?s.data():null}catch(e){return null}}
-async function loadBills(){let snap=await getDocs(query(collection(db,"bills"),where("uid","==",user.uid)));bills=snap.docs.map(d=>({id:d.id,...d.data()}));renderBills();}
-function renderBills(){let s=$("search").value.toLowerCase(),list=bills.filter(b=>[b.billNo,b.model].join(" ").toLowerCase().includes(s));let totals=bills.reduce((a,b)=>{a.booking+=b.booking||0;a.work+=b.work||0;a.charges+=b.total||0;a.nag+=b.nag||0;a.crystal+=b.crystal||0;a.bn+=b.bn||0;return a},{booking:0,work:0,charges:0,nag:0,crystal:0,bn:0});$("metrics").innerHTML=[["Total Bills",bills.length],["Total Booking",money(totals.booking)],["Total Work",money(totals.work)],["Piece Charges",money(totals.charges)],["Nag Quantity",totals.nag],["Crystal Quantity",totals.crystal],["BN Quantity",totals.bn]].map(x=>`<div class="metric"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join("");$("billrows").innerHTML=list.map(b=>`<tr><td>${b.billNo||""}</td><td>${b.model||""}</td><td>${b.date||""}</td><td>${b.nag||0}</td><td>${b.crystal||0}</td><td>${b.bn||0}</td><td>${money(b.total)}</td></tr>`).join("")||'<tr><td colspan="7">No bills found</td></tr>';}
-$("search").oninput=renderBills;
-$("savebill").onclick=async()=>{try{let q=charges();let b={uid:user.uid,billNo:$("billno").value,model:$("model").value,booking:+$("booking").value||0,work:+$("work").value||0,date:$("billdate").value,...q,createdAt:serverTimestamp()};await addDoc(collection(db,"bills"),b);$("billmsg").textContent="Bill saved successfully.";["model","booking","work","nag","crystal","bn"].forEach(x=>$(x).value=x==="model"?"":0);$("billno").value="ANW-"+Date.now().toString().slice(-8);charges();await loadBills()}catch(e){$("billmsg").textContent=e.message}};
-function ratio(){let item=$("ratioItem").value,q=+$("ratioQty").value||0;$("ratioResult").textContent=money(q*rates[item==="nag"?"nag":"crystal"]);}$("ratioQty").oninput=ratio;$("ratioItem").onchange=ratio;ratio();
-$("requestsalary").onclick=async()=>{try{await addDoc(collection(db,"salaryRequests"),{uid:user.uid,email:user.email,displayName:$("displayname").value||user.email,amount:+$("salaryamount").value||0,month:$("salarymonth").value,note:$("salarynote").value,status:"pending",createdAt:serverTimestamp()});$("salarymsg").textContent="Request submitted to admin.";await loadRequests()}catch(e){$("salarymsg").textContent=e.message}};
-async function loadRequests(){let s=await getDocs(query(collection(db,"salaryRequests"),where("uid","==",user.uid)));requests=s.docs.map(d=>({id:d.id,...d.data()}));$("requests").innerHTML=requests.map(r=>`<p><b>${r.month}</b> · ${money(r.amount)} · <span class="${r.status==="approved"?"success":""}">${r.status}</span></p>`).join("")||"No requests yet.";let approved=requests.filter(r=>r.status==="approved").reduce((a,r)=>a+r.amount,0);$("salarymetrics").innerHTML=`<div class="metric"><small>Approved Salary Total</small><strong>${money(approved)}</strong></div><div class="metric"><small>Pending Requests</small><strong>${requests.filter(r=>r.status==="pending").length}</strong></div>`;}
-async function loadAdmin(){let s=await getDocs(query(collection(db,"salaryRequests"),where("status","==","pending")));let arr=s.docs.map(d=>({id:d.id,...d.data()}));$("adminrequests").innerHTML=arr.map(r=>`<div class="card"><b>${r.displayName||r.email}</b><p>${r.month} · ${money(r.amount)}</p><p>${r.note||""}</p><button class="btn" data-approve="${r.id}">Approve</button> <button class="btn danger" data-reject="${r.id}">Reject</button></div>`).join("")||"No pending requests.";document.querySelectorAll("[data-approve]").forEach(b=>b.onclick=()=>decide(b.dataset.approve,"approved"));document.querySelectorAll("[data-reject]").forEach(b=>b.onclick=()=>decide(b.dataset.reject,"rejected"));}
-async function decide(id,status){await updateDoc(doc(db,"salaryRequests",id),{status,reviewedAt:serverTimestamp(),reviewedBy:user.uid});await loadAdmin();}
-$("photo").onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{photoData=r.result;$("avatar").src=photoData};r.readAsDataURL(f)};
-$("saveprofile").onclick=async()=>{try{await setDoc(doc(db,"users",user.uid),{displayName:$("displayname").value,photoURL:photoData||$("avatar").src,role},{merge:true});$("profilemsg").textContent="Profile saved."}catch(e){$("profilemsg").textContent=e.message}};
-</script>
-</body></html>
+
+name: Build ALGAIDA NAG WORK APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build APK
+        run: gradle --no-daemon assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ALGAIDA-NAG-WORK-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
